@@ -1,0 +1,82 @@
+<section class="animal-list">
+  <h2>🐾 Animals Available for Adoption</h2>
+  <div class="search-section">
+    <h2>Find Your Perfect Match</h2>
+    <div class="search-bar">
+      <input type="text" placeholder="Search animals by name or type..." />
+      <button>
+        <i class="fa fa-search" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="animal-grid">
+    <div class="animal-card" *ngFor="let a of animals">
+      <img [src]="getPhoto(a)" [alt]="a.name" />
+
+      <div class="animal-info">
+        <h3>{{ a.name }}</h3>
+        <p>{{ a.description }}</p>
+        <p><b>Type:</b> {{ a.type }}</p>
+        <p><b>Breed:</b> {{ a.breeds?.primary }}</p>
+        <p><b>Age:</b> {{ a.age }}</p>
+        <p><b>Gender:</b> {{ a.gender }}</p>
+        <p><b>Location:</b> {{ a.contact?.address?.city }}, {{ a.contact?.address?.state }}</p>
+
+        <div *ngIf="a.tags?.length" class="animal-tags">
+          <span *ngFor="let tag of a.tags" class="tag">{{ tag }}</span>
+        </div>
+
+        <div *ngIf="a.attributes" class="animal-attributes">
+          <h4>Attributes</h4>
+          <ul>
+            <li>Spayed / Neutered: {{ a.attributes.spayed_neutered ? 'Yes' : 'No' }}</li>
+            <li>House Trained: {{ a.attributes.house_trained ? 'Yes' : 'No' }}</li>
+            <li>Declawed: {{ a.attributes.declawed ? 'Yes' : 'No' }}</li>
+            <li>Special Needs: {{ a.attributes.special_needs ? 'Yes' : 'No' }}</li>
+            <li>Shots Current: {{ a.attributes.shots_current ? 'Yes' : 'No' }}</li>
+          </ul>
+        </div>
+
+        <!-- Environment -->
+        <div *ngIf="a.environment" class="animal-environment">
+          <h4>Environment</h4>
+          <ul>
+            <li>
+              Good with Children:
+              {{
+                a.environment.children === true
+                  ? 'Yes'
+                  : a.environment.children === false
+                  ? 'No'
+                  : 'Unknown'
+              }}
+            </li>
+            <li>
+              Good with Dogs:
+              {{
+                a.environment.dogs === true
+                  ? 'Yes'
+                  : a.environment.dogs === false
+                  ? 'No'
+                  : 'Unknown'
+              }}
+            </li>
+            <li>
+              Good with Cats:
+              {{
+                a.environment.cats === true
+                  ? 'Yes'
+                  : a.environment.cats === false
+                  ? 'No'
+                  : 'Unknown'
+              }}
+            </li>
+          </ul>
+        </div>
+
+        <a [href]="a.url" target="_blank" class="adopt-btn">View on Petfinder</a>
+      </div>
+    </div>
+  </div>
+</section>
