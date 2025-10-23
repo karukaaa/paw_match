@@ -77,10 +77,9 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s ease;
-}
-
-.animal-card:hover {
-  transform: scale(1.02);
+  display: flex;
+  flex-direction: column;
+  min-height: 720px;
 }
 
 .animal-card img {
@@ -90,36 +89,25 @@
 }
 
 .animal-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
   padding: 15px;
   color: #333;
 }
 
-.animal-info h3 {
-  color: #2c5530;
-  margin-bottom: 8px;
+/* Секция с данными (тип, возраст и т.д.) */
+.animal-info > p {
+  margin: 3px 0;
 }
 
-.adopt-btn {
-  display: inline-block;
-  margin-top: 10px;
-  background-color: #e3a857;
-  color: #fff;
-  padding: 8px 15px;
-  border-radius: 20px;
-  text-decoration: none;
-  font-size: 14px;
-  transition: all 0.3s ease;
-}
-
-.adopt-btn:hover {
-  background-color: #d08c2f;
-}
-
+/* Теги */
 .animal-tags {
-  margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  margin-top: 8px;
 }
 
 .tag {
@@ -128,20 +116,29 @@
   font-size: 13px;
   padding: 5px 10px;
   border-radius: 12px;
-  font-weight: 500;
   border: 1px solid #e3a857;
-  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+/* Атрибуты и окружение */
 .animal-attributes,
 .animal-environment {
-  margin-top: 10px;
   background-color: #fff8ec;
   border: 1px solid #e3a857;
   border-radius: 10px;
   padding: 10px 15px;
+  margin-top: 10px;
+  flex-shrink: 0;
 }
 
+.animal-attributes {
+  min-height: 120px;
+}
+
+.animal-environment {
+  min-height: 100px;
+}
+
+/* Заголовки */
 .animal-attributes h4,
 .animal-environment h4 {
   color: #2c5530;
@@ -149,6 +146,7 @@
   margin-bottom: 6px;
 }
 
+/* Списки */
 .animal-attributes ul,
 .animal-environment ul {
   list-style: none;
@@ -161,4 +159,32 @@
   font-size: 14px;
   color: #333;
   line-height: 1.5;
+}
+
+/* Кнопка */
+.adopt-btn {
+  background-color: #e3a857;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 14px;
+  text-align: center;
+  transition: all 0.3s ease;
+  align-self: center;
+  margin-top: 15px;
+}
+
+.adopt-btn:hover {
+  background-color: #d08c2f;
+}
+
+.cat-card {
+  border: 2px solid #b9b6f0;
+  box-shadow: 0 0 10px rgba(255, 192, 203, 0.3);
+}
+
+.dog-card {
+  border: 2px solid #b4d4a2;
+  box-shadow: 0 0 10px rgba(180, 212, 162, 0.3);
 }

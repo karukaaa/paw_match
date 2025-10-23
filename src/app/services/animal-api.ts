@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, switchMap, of } from 'rxjs';
+import { Observable, switchMap, of, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -16,7 +16,6 @@ export class AnimalApi {
 
   private getToken(): Observable<string> {
     if (this.accessToken && Date.now() < this.tokenExpiry) {
-      console.log(this.accessToken);
       return of(this.accessToken);
     }
 
@@ -30,28 +29,32 @@ export class AnimalApi {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       })
       .pipe(
-        switchMap((res) => {
+        map((res) => {
           this.accessToken = res.access_token;
           this.tokenExpiry = Date.now() + res.expires_in * 1000;
-          console.log(res.access_token);
-          return of(res.access_token);
+          return this.accessToken!;
         })
       );
   }
 
   getAnimals(page: number = 1, limit: number = 100): Observable<any> {
-    return this.getToken().pipe(
-      switchMap((token) => {
-        const headers = new HttpHeaders({
-          Authorization: `Bearer ${token}`,
-        });
+    return new Observable((observer) => {
+      this.getToken().subscribe({
+        next: (token) => {
+          const headers = new HttpHeaders({
+            Authorization: `Bearer ${token}`,
+          });
+          const params = { page: page.toString(), limit: limit.toString() };
 
-        const params = {
-          page: page.toString(),
-          limit: limit.toString(),
-        };
-        return this.http.get<any>(this.baseUrl, { headers, params });
-      })
-    );
+          this.http.get<any>(this.baseUrl, { headers, params }).subscribe({
+            next: (data) => observer.next(data),
+            error: (err) => observer.error(err),
+            complete: () => observer.complete(),
+          });
+        },
+
+        error: (err) => observer.error(err),
+      });
+    });
   }
 }

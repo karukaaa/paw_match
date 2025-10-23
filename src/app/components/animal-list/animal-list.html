@@ -11,7 +11,12 @@
   </div>
 
   <div class="animal-grid">
-    <div class="animal-card" *ngFor="let a of animals">
+    <div
+      class="animal-card"
+      *ngFor="let a of animals"
+      [class.cat-card]="a.type === 'Cat'"
+      [class.dog-card]="a.type === 'Dog'"
+    >
       <img [src]="getPhoto(a)" [alt]="a.name" />
 
       <div class="animal-info">
