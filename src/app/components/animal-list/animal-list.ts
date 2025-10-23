@@ -59,13 +59,14 @@ export class AnimalList implements OnInit {
     const query = (raw || '').trim().toLowerCase();
     if (!query) return this.animals;
 
-    // разделяем по пробелам, удаляем пустые строки
+    // разделяем по пробелам, убираем пустые
     const terms = query.split(/\s+/).filter(Boolean);
 
     return this.animals.filter((a) => {
       const tags = (a.tags || []).map((t) => t.toLowerCase());
-      // животное должно содержать все введённые теги
-      return terms.some((term) => tags.includes(term));
+      // животное должно содержать ВСЕ введённые термины,
+      // но теперь допускаем частичное совпадение (includes)
+      return terms.every((term) => tags.some((tag) => tag.includes(term)));
     });
   }
 }
