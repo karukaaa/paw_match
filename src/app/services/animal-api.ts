@@ -37,7 +37,7 @@ export class AnimalApi {
       );
   }
 
-  getAnimals(page: number = 1, limit: number = 100): Observable<any> {
+  getAnimals(page: number = 1, limit: number = 100): Observable<{ animals: Animal[] }> {
     return new Observable((observer) => {
       this.getToken().subscribe({
         next: (token) => {
@@ -57,4 +57,50 @@ export class AnimalApi {
       });
     });
   }
+}
+
+export interface Animal {
+  id: number;
+  name: string;
+  description: string;
+  type: string;
+  age: string;
+  gender: string;
+  breeds: {
+    primary: string;
+    secondary?: string;
+    mixed?: boolean;
+  };
+  contact: {
+    address: {
+      city: string;
+      state: string;
+    };
+  };
+  tags?: string[];
+  attributes?: {
+    spayed_neutered?: boolean;
+    house_trained?: boolean;
+    declawed?: boolean;
+    special_needs?: boolean;
+    shots_current?: boolean;
+  };
+  environment?: {
+    children?: boolean | null;
+    dogs?: boolean | null;
+    cats?: boolean | null;
+  };
+  primary_photo_cropped?: {
+    small?: string;
+    medium?: string;
+    large?: string;
+    full?: string;
+  };
+  photos?: Array<{
+    small?: string;
+    medium?: string;
+    large?: string;
+    full?: string;
+  }>;
+  url: string;
 }

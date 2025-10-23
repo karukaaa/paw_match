@@ -1,19 +1,21 @@
 <section class="animal-list">
   <h2>🐾 Animals Available for Adoption</h2>
   <div class="search-section">
-    <h2>Find Your Perfect Match</h2>
+    <h2>Find by tags (type "calm", "playful" or other tags)</h2>
     <div class="search-bar">
-      <input type="text" placeholder="Search animals by name or type..." />
-      <button>
+      <input type="search" placeholder="Enter tags" [value]="query" (input)="onInput($event)" />
+      <button (click)="reload()">
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>
   </div>
 
+  <hr />
+
   <div class="animal-grid">
+    @for(a of filteredAnimals; track a.id){
     <div
       class="animal-card"
-      *ngFor="let a of animals"
       [class.cat-card]="a.type === 'Cat'"
       [class.dog-card]="a.type === 'Dog'"
     >
@@ -23,16 +25,19 @@
         <h3>{{ a.name }}</h3>
         <p>{{ a.description }}</p>
         <p><b>Type:</b> {{ a.type }}</p>
-        <p><b>Breed:</b> {{ a.breeds?.primary }}</p>
+        <p><b>Breed:</b> {{ a.breeds.primary }}</p>
         <p><b>Age:</b> {{ a.age }}</p>
         <p><b>Gender:</b> {{ a.gender }}</p>
-        <p><b>Location:</b> {{ a.contact?.address?.city }}, {{ a.contact?.address?.state }}</p>
+        <p><b>Location:</b> {{ a.contact.address.city }}, {{ a.contact.address.state }}</p>
 
-        <div *ngIf="a.tags?.length" class="animal-tags">
-          <span *ngFor="let tag of a.tags" class="tag">{{ tag }}</span>
+        @if (a.tags?.length) {
+        <div class="animal-tags">
+          @for (tag of a.tags; track $index) {
+          <span class="tag">{{ tag }}</span>
+          }
         </div>
-
-        <div *ngIf="a.attributes" class="animal-attributes">
+        } @if (a.attributes) {
+        <div class="animal-attributes">
           <h4>Attributes</h4>
           <ul>
             <li>Spayed / Neutered: {{ a.attributes.spayed_neutered ? 'Yes' : 'No' }}</li>
@@ -42,9 +47,8 @@
             <li>Shots Current: {{ a.attributes.shots_current ? 'Yes' : 'No' }}</li>
           </ul>
         </div>
-
-        <!-- Environment -->
-        <div *ngIf="a.environment" class="animal-environment">
+        } @if (a.environment) {
+        <div class="animal-environment">
           <h4>Environment</h4>
           <ul>
             <li>
@@ -79,9 +83,11 @@
             </li>
           </ul>
         </div>
+        }
 
         <a [href]="a.url" target="_blank" class="adopt-btn">View on Petfinder</a>
       </div>
     </div>
+    }
   </div>
 </section>
