@@ -74,6 +74,27 @@
         <b>Email:</b> contact@pawmatch.org
       </p>
 
+      <div class="subscribe-section">
+        <h3>Leave your email to receive updates 🐾</h3>
+
+        <input
+          type="email"
+          [(ngModel)]="email"
+          placeholder="Enter your email"
+          class="email-input"
+        />
+
+        <button class="subscribe-btn" (click)="subscribe()">Subscribe</button>
+
+        @if (subscribed) {
+        <p class="thank-you">
+          🎉 Thanks! We’ll send updates about our pets to
+          <strong>{{ email }}</strong
+          >.
+        </p>
+        }
+      </div>
+
       <button class="donate-btn" (click)="openDonationSite()">Donate Now</button>
     </div>
 
@@ -91,5 +112,7 @@
         alt="Volunteers"
       />
     </div>
+
+    <app-dog-facts class="facts-panel"></app-dog-facts>
   </div>
 </section>

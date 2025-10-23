@@ -1,0 +1,36 @@
+<div class="dog-facts-panel">
+  <h2>🐶 Random Dog Facts!</h2>
+
+  <div class="fact-section">
+    @if (!loading) {
+    <p class="main-fact">{{ fact }}</p>
+    } @else {
+    <p>Loading a fun fact about dogs...</p>
+    }
+
+    <button (click)="loadFact()">New Fact 🔁</button>
+  </div>
+
+  <div class="more-facts">
+    <h3>🐾 Popular Dog Breeds</h3>
+
+    @if (breeds.length > 0) {
+    <ul>
+      @for (breed of breeds; track breed.name) {
+      <li>
+        <strong>{{ breed.name }}</strong> — {{ breed.description }}
+      </li>
+      }
+    </ul>
+    } @else {
+    <p>Loading breed descriptions...</p>
+    }
+  </div>
+
+  <div class="dog-quote">
+    <p>
+      “The better I get to know men, the more I find myself loving dogs.”
+      <span>— Charles de Gaulle</span>
+    </p>
+  </div>
+</div>

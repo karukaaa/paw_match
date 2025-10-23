@@ -27,9 +27,9 @@
 .about-content {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 40px;
-  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 30px;
+  height: 100%;
 }
 
 .about-text {
@@ -58,6 +58,27 @@
   color: #e3a857;
 }
 
+.subscribe-section {
+  margin-top: 25px;
+}
+
+.email-input {
+  padding: 10px;
+  width: 250px;
+  border: 2px solid #ffa726;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+.subscribe-btn {
+  padding: 10px 15px;
+  background-color: #ffb300;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
 .donate-btn {
   margin-top: 25px;
   background-color: #e3a857;
@@ -76,11 +97,13 @@
 }
 
 .about-images {
-  flex: 1 1 40%;
+  flex: 1 1 35%;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: space-between;
   gap: 20px;
+  height: 100%;
 }
 
 .about-images img {
@@ -93,4 +116,29 @@
 
 .about-images img:hover {
   transform: scale(1.03);
+}
+
+.facts-panel {
+  flex: 0 0 300px;
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+}
+
+app-dog-facts {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+app-dog-facts .dog-facts-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9e1b8;
+  border-radius: 12px;
+  padding: 25px 20px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }

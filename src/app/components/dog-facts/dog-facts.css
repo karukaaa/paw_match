@@ -1,0 +1,85 @@
+.dog-facts-panel {
+  background-color: #f9e1b8;
+  border-left: 5px solid #e3a857;
+  border-radius: 12px;
+  padding: 30px 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #3b2a1a;
+}
+
+h2 {
+  color: #4b2f12;
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.fact-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.main-fact {
+  font-size: 17px;
+  line-height: 1.5;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #e3a857;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #d08c2f;
+}
+
+.more-facts {
+  margin-top: 10px;
+}
+
+.more-facts h3 {
+  font-size: 18px;
+  color: #4b2f12;
+  margin-bottom: 8px;
+}
+
+.more-facts ul {
+  list-style-type: '🐾 ';
+  padding-left: 15px;
+}
+
+.more-facts li {
+  font-size: 15px;
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.dog-quote {
+  background-color: #f6d6a7;
+  border-radius: 8px;
+  padding: 10px;
+  font-style: italic;
+  font-size: 15px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.dog-quote span {
+  display: block;
+  font-style: normal;
+  font-weight: bold;
+  color: #5a381f;
+  margin-top: 6px;
+}

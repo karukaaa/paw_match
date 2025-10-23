@@ -34,7 +34,7 @@ export class AnimalList implements OnInit {
         this.animals = (data.animals || []).filter(
           (a: any) => a.primary_photo_cropped || (a.photos && a.photos.length > 0)
         );
-        this.filteredAnimals = this.animals; // показываем всех при старте
+        this.filteredAnimals = this.animals;
       },
       error: (err) => console.error(err),
     });
@@ -64,7 +64,7 @@ export class AnimalList implements OnInit {
 
     return this.animals.filter((a) => {
       const tags = (a.tags || []).map((t) => t.toLowerCase());
-      // животное должно содержать ВСЕ введённые термины,
+      // животное должно содержать все введённые terms,
       // но теперь допускаем частичное совпадение (includes)
       return terms.every((term) => tags.some((tag) => tag.includes(term)));
     });

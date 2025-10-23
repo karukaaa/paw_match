@@ -1,0 +1,16 @@
+.about-layout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px;
+}
+
+app-about-us {
+  flex: 1;
+  max-width: 900px;
+}
+
+app-dog-facts {
+  flex-shrink: 0;
+}
