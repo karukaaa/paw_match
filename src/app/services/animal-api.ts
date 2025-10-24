@@ -10,12 +10,11 @@ export class AnimalApi {
   private baseUrl = 'https://api.petfinder.com/v2/animals';
   private tokenUrl = 'https://api.petfinder.com/v2/oauth2/token';
   private accessToken: string | null = null;
-  private tokenExpiry: number = 0;
 
   constructor(private http: HttpClient) {}
 
   private getToken(): Observable<string> {
-    if (this.accessToken && Date.now() < this.tokenExpiry) {
+    if (this.accessToken) {
       return of(this.accessToken);
     }
 
@@ -31,31 +30,23 @@ export class AnimalApi {
       .pipe(
         map((res) => {
           this.accessToken = res.access_token;
-          this.tokenExpiry = Date.now() + res.expires_in * 1000;
           return this.accessToken!;
         })
       );
   }
 
   getAnimals(page: number = 1, limit: number = 100): Observable<{ animals: Animal[] }> {
-    return new Observable((observer) => {
-      this.getToken().subscribe({
-        next: (token) => {
-          const headers = new HttpHeaders({
-            Authorization: `Bearer ${token}`,
-          });
-          const params = { page: page.toString(), limit: limit.toString() };
+    const params = { page: page.toString(), limit: limit.toString() };
 
-          this.http.get<any>(this.baseUrl, { headers, params }).subscribe({
-            next: (data) => observer.next(data),
-            error: (err) => observer.error(err),
-            complete: () => observer.complete(),
-          });
-        },
+    return this.getToken().pipe(
+      switchMap((token) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
 
-        error: (err) => observer.error(err),
-      });
-    });
+        return this.http.get<{ animals: Animal[] }>(this.baseUrl, { headers, params });
+      })
+    );
   }
 }
 
