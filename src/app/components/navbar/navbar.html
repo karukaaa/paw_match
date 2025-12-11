@@ -1,0 +1,25 @@
+<nav class="navbar">
+  <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"> Home </a>
+
+  <a routerLink="/news" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    News
+  </a>
+
+  <span class="spacer"></span>
+
+  @if (!user()) {
+  <a routerLink="/signup" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    Sign Up
+  </a>
+
+  <a routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    Log In
+  </a>
+  } @if (user()) {
+  <a routerLink="/profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    Profile
+  </a>
+
+  <button class="logout-btn" (click)="logout()">Logout</button>
+  }
+</nav>

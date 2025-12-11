@@ -1,0 +1,19 @@
+.profile-page {
+  padding: 30px;
+  font-family: Arial, sans-serif;
+}
+
+.profile-card {
+  background: #fafafa;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  max-width: 500px;
+}
+
+.profile-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-top: 10px;
+}

@@ -1,0 +1,163 @@
+.news-page {
+  padding: 40px 10%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.news-page h2 {
+  text-align: center;
+  color: #2c5530;
+  margin-bottom: 25px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 250px;
+  padding: 10px 16px;
+  border: 2px solid #e3a857;
+  border-radius: 25px;
+  background: #fffaf2;
+  font-size: 16px;
+  outline: none;
+  transition: 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #d08c2f;
+  box-shadow: 0 0 8px rgba(227, 168, 87, 0.4);
+}
+
+.reset-btn {
+  padding: 10px 18px;
+  background-color: #e3a857;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.reset-btn:hover {
+  background-color: #d08c2f;
+}
+
+.page-size label {
+  margin-right: 6px;
+  color: #2c5530;
+  font-weight: bold;
+}
+
+.page-size select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+
+.state {
+  text-align: center;
+  color: #555;
+  margin: 20px 0;
+}
+
+.state.error {
+  color: red;
+  font-weight: bold;
+}
+
+.info {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.news-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  gap: 20px;
+}
+
+.news-card {
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+  border: 2px solid #0e2302;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease;
+}
+
+.news-card:hover {
+  transform: translateY(-4px);
+}
+
+.news-card h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+  color: #011002;
+}
+
+.meta {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.abstract {
+  font-size: 15px;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.read-link {
+  display: inline-block;
+  margin-top: auto;
+  color: #4169b2;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.read-link:hover {
+  color: #183c7f;
+  text-decoration: underline;
+}
+
+.pagination {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.pagination button {
+  padding: 10px 18px;
+  background: #0b2c0e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #244725;
+}
+
+.pagination button:disabled {
+  background: #9cb5a1;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 16px;
+  color: #2c5530;
+  font-weight: bold;
+}

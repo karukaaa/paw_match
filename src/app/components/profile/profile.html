@@ -1,0 +1,18 @@
+<section class="profile-page">
+  <h2>Your Profile</h2>
+
+  @if (user$ | async; as user) {
+  <div class="profile-card">
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>User ID (UID):</strong> {{ user.uid }}</p>
+
+    @if (user.photoURL) {
+    <img [src]="user.photoURL" alt="Profile Photo" class="profile-photo" />
+    } @if (user.displayName) {
+    <p><strong>Name:</strong> {{ user.displayName }}</p>
+    }
+  </div>
+  } @else {
+  <p>You are not logged in.</p>
+  }
+</section>
