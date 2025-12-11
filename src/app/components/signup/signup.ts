@@ -24,6 +24,18 @@ export class Signup {
   submitForm() {
     this.error.set(null);
 
+    const emailError = this.validateEmail(this.email());
+    if (emailError) {
+      this.error.set(emailError);
+      return;
+    }
+
+    const pwError = this.validatePassword(this.password());
+    if (pwError) {
+      this.error.set(pwError);
+      return;
+    }
+
     if (this.password() !== this.confirmPassword()) {
       this.error.set("Passwords don't match.");
       return;
@@ -42,5 +54,18 @@ export class Signup {
         this.error.set(errMsg);
       },
     });
+  }
+
+  validateEmail(email: string): string | null {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email) ? null : 'Invalid email format.';
+  }
+
+  validatePassword(pw: string): string | null {
+    if (pw.length < 8) return 'Password must be at least 8 characters.';
+    if (!/[0-9]/.test(pw)) return 'Password must include at least one number.';
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(pw))
+      return 'Password must include at least one special character.';
+    return null;
   }
 }
