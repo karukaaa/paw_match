@@ -1,7 +1,6 @@
 <section class="news-page">
   <h2>News</h2>
 
-  <!-- Top toolbar: search + reset + page size -->
   <div class="toolbar">
     <input
       type="search"
@@ -12,16 +11,13 @@
     />
 
     <button type="button" class="reset-btn" (click)="refresh()">Reset</button>
-
     <p>10 news articles are displayed</p>
   </div>
 
-  <!-- Pagination controls -->
+  <!-- TOP Pagination -->
   <div class="pagination" *ngIf="totalHits() > 0">
     <button type="button" (click)="goToPage(page() - 1)" [disabled]="page() === 0">‹ Prev</button>
-
     <span>Page {{ page() }}</span>
-
     <button
       type="button"
       (click)="goToPage(page() + 1)"
@@ -31,42 +27,21 @@
     </button>
   </div>
 
-  <!-- Loading / error states -->
+  <!-- Loading -->
   <div *ngIf="loading()" class="state">Loading news...</div>
+  <div *ngIf="error()" class="state error">{{ error() }}</div>
 
-  <div *ngIf="error()" class="state error">
-    {{ error() }}
-  </div>
-
-  <!-- News list -->
+  <!-- List -->
   <div class="news-list" *ngIf="!loading() && !error()">
-    <article class="news-card" *ngFor="let article of news()">
-      <h3>{{ article.headline.main }}</h3>
-
-      <p class="meta">
-        <span *ngIf="article.byline?.original">{{ article.byline.original }}</span>
-        <span *ngIf="article.pub_date"> • {{ article.pub_date | date : 'mediumDate' }}</span>
-        <span *ngIf="article.section_name"> • {{ article.section_name }}</span>
-      </p>
-
-      <p class="abstract">
-        {{ article.abstract || article.snippet }}
-      </p>
-
-      <a class="read-link" [href]="article.web_url" target="_blank" rel="noopener noreferrer">
-        Read full article →
-      </a>
-    </article>
+    <app-news-card *ngFor="let article of news()" [article]="article"></app-news-card>
 
     <p *ngIf="news().length === 0">No articles found for this query.</p>
   </div>
 
-  <!-- Pagination controls -->
+  <!-- Bottom Pagination -->
   <div class="pagination" *ngIf="totalHits() > 0">
     <button type="button" (click)="goToPage(page() - 1)" [disabled]="page() === 0">‹ Prev</button>
-
     <span>Page {{ page() }}</span>
-
     <button
       type="button"
       (click)="goToPage(page() + 1)"

@@ -17,10 +17,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NewsService } from '../../services/news-service';
 import { NewsArticle, NYTResponse } from '../../interfaces/newsInterfaces';
 import { sign } from 'crypto';
+import { NewsCard } from '../news-card/news-card';
 
 @Component({
   selector: 'app-news-list',
-  imports: [CommonModule],
+  imports: [CommonModule, NewsCard],
   standalone: true,
   templateUrl: './news-list.html',
   styleUrl: './news-list.css',

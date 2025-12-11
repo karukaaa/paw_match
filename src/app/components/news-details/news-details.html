@@ -1,0 +1,57 @@
+<section class="details-page" *ngIf="article() as a">
+  <button class="back-btn" (click)="back()">← Back to list</button>
+
+  <div class="top-section">
+    <!-- LEFT IMAGE -->
+    <img
+      *ngIf="a.multimedia?.default?.url"
+      [src]="a?.multimedia?.default?.url"
+      class="hero-image"
+      alt="News Image"
+    />
+
+    <!-- RIGHT TEXT -->
+    <div class="right-block">
+      <h1 class="title">{{ a.headline.main }}</h1>
+
+      <p class="meta">
+        <span *ngIf="a.byline?.original">{{ a.byline.original }}</span>
+        <span *ngIf="a.pub_date"> • {{ a.pub_date | date : 'mediumDate' }}</span>
+        <span *ngIf="a.section_name"> • {{ a.section_name }}</span>
+        <span *ngIf="a.subsection_name"> • {{ a.subsection_name }}</span>
+      </p>
+
+      <p class="snippet">"{{ a.snippet }}"</p>
+
+      <p class="abstract">
+        {{ a.abstract }}
+      </p>
+
+      <a class="read-original" [href]="a.web_url" target="_blank"> Read full article on NYT → </a>
+    </div>
+  </div>
+
+  <!-- EXTRA INFORMATION UNDERNEATH -->
+
+  <div class="details-extra">
+    <h3>Additional Information</h3>
+
+    <p><strong>Document type:</strong> {{ a.document_type }}</p>
+    <p><strong>Material type:</strong> {{ a.type_of_material }}</p>
+    <p><strong>Source:</strong> {{ a.source }}</p>
+    <p *ngIf="a.word_count"><strong>Word count:</strong> {{ a.word_count }}</p>
+
+    <!-- Keywords block -->
+    <div class="keywords" *ngIf="a.keywords?.length as count">
+      <h4>Keywords</h4>
+      <div class="keyword-list">
+        <span class="keyword" *ngFor="let kw of a.keywords">
+          {{ kw.value }}
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div *ngIf="loading()" class="state">Loading article…</div>
+<div *ngIf="error()" class="state error">{{ error() }}</div>

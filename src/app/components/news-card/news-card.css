@@ -1,0 +1,69 @@
+.news-card {
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+  border: 2px solid #b4d4a2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease;
+}
+
+.news-card:hover {
+  transform: translateY(-4px);
+}
+
+.news-card h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+  color: #2c5530;
+}
+
+.meta {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.abstract {
+  font-size: 15px;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.learn-btn {
+  display: inline-block;
+  margin-top: auto;
+  color: #e3a857;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.learn-btn:hover {
+  color: #d08c2f;
+  text-decoration: underline;
+}
+
+.extra-fields {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.material {
+  background: #fff2d6;
+  color: #2c5530;
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid #e3a857;
+  font-size: 13px;
+}
+
+.word-count {
+  background: #e3f2ff;
+  color: #244475;
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid #79a9dd;
+  font-size: 13px;
+}

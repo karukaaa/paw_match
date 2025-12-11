@@ -1,1 +1,21 @@
-<p>news-card works!</p>
+<article class="news-card">
+  <h3>{{ article.headline.main }}</h3>
+
+  <p class="meta">
+    <span *ngIf="article.byline?.original">{{ article.byline.original }}</span>
+    <span *ngIf="article.pub_date"> • {{ article.pub_date | date : 'mediumDate' }}</span>
+    <span *ngIf="article.section_name"> • {{ article.section_name }}</span>
+  </p>
+
+  <p class="abstract">
+    {{ article.abstract || article.snippet }}
+  </p>
+
+  <!-- NEW FIELDS -->
+  <div class="extra-fields">
+    <span class="material">{{ article.type_of_material }}</span>
+    <span class="word-count" *ngIf="article.word_count"> {{ article.word_count }} words </span>
+  </div>
+
+  <button class="learn-btn" (click)="openDetails()">Learn more</button>
+</article>
