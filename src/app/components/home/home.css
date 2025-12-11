@@ -1,0 +1,275 @@
+.home-page {
+  padding: 40px 10%;
+  font-family: 'Poppins', sans-serif;
+  background: #fdfaf4;
+}
+
+/* HERO */
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+
+.hero-text {
+  flex: 1 1 320px;
+  max-width: 520px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #fff4dc;
+  color: #8b5a20;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  margin-bottom: 10px;
+}
+
+.hero-text h1 {
+  font-size: 32px;
+  margin-bottom: 12px;
+  color: #2c5530;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: 0.25s ease;
+}
+
+.btn.primary {
+  background-color: #579be3;
+  color: #ffffff;
+}
+
+.btn.primary:hover {
+  background-color: #2f3cd0;
+}
+
+.btn.secondary {
+  background-color: #ffffff;
+  color: #2c5530;
+  border: 2px solid #b4d4a2;
+}
+
+.btn.secondary:hover {
+  background-color: #f0f8f3;
+}
+
+.hero-highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.hero-highlights li::before {
+  content: '•';
+  color: #e3a857;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+.hero-illustration {
+  flex: 1 1 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: stretch;
+}
+
+/* you can swap this with a real <img> if you want */
+.hero-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 2px solid #b4d4a2;
+  padding: 18px 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.hero-card h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  color: #2c5530;
+}
+
+.hero-card-meta {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.hero-card-text {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.hero-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.hero-card-tags span {
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: #fff4dc;
+  color: #8b5a20;
+}
+
+.hero-card.small {
+  max-width: 260px;
+  background: #2c5530;
+  border-color: #2c5530;
+  color: #ffffff;
+}
+
+.hero-card.small .small-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.hero-card.small .small-text {
+  font-size: 13px;
+}
+
+/* FEATURES */
+
+.features {
+  padding: 30px 0 10px;
+}
+
+.features h2 {
+  text-align: center;
+  color: #2c5530;
+  margin-bottom: 22px;
+}
+
+.features-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+.feature-card {
+  background: #ffffff;
+  border: 2px solid #b4d4a2;
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.04);
+}
+
+.feature-card h3 {
+  margin: 0 0 8px;
+  color: #2c5530;
+  font-size: 18px;
+}
+
+.feature-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #444;
+}
+
+/* HOW IT WORKS */
+
+.how-it-works {
+  padding: 30px 0 20px;
+}
+
+.how-it-works h2 {
+  text-align: center;
+  color: #2c5530;
+  margin-bottom: 20px;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.step {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 2px solid #e3a857;
+  padding: 16px 18px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.04);
+  text-align: left;
+}
+
+.step-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e3a857;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.step h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  color: #2c5530;
+}
+
+.step p {
+  margin: 0;
+  font-size: 14px;
+  color: #444;
+}
+
+/* CTA STRIP */
+
+.cta-strip {
+  margin-top: 40px;
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #2c5530, #4c7d4d);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.cta-strip p {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+}

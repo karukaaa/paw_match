@@ -18,10 +18,7 @@
         <span *ngIf="a.byline?.original">{{ a.byline.original }}</span>
         <span *ngIf="a.pub_date"> • {{ a.pub_date | date : 'mediumDate' }}</span>
         <span *ngIf="a.section_name"> • {{ a.section_name }}</span>
-        <span *ngIf="a.subsection_name"> • {{ a.subsection_name }}</span>
       </p>
-
-      <p class="snippet">"{{ a.snippet }}"</p>
 
       <p class="abstract">
         {{ a.abstract }}

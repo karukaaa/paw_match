@@ -1,0 +1,87 @@
+.login-container {
+  max-width: 440px;
+  margin: 60px auto;
+  padding: 32px 28px;
+  background: #ffffff;
+  border: 2px solid #b4d4a2;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Title */
+.login-container h2 {
+  text-align: center;
+  font-size: 26px;
+  margin-bottom: 20px;
+  color: #2c5530;
+  font-weight: 600;
+}
+
+/* Error message */
+.error {
+  background: #ffe5e5;
+  color: #b60000;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 16px;
+  border-left: 4px solid #ff7a7a;
+}
+
+/* Form layout */
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Inputs */
+.login-container input {
+  width: 100%;
+  max-width: 320px;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+
+  border: 2px solid #e3a857;
+  background: #fffaf2;
+  border-radius: 10px;
+
+  font-size: 15px;
+  outline: none;
+  transition: 0.25s ease;
+}
+
+.login-container input:focus {
+  border-color: #d08c2f;
+  box-shadow: 0 0 8px rgba(227, 168, 87, 0.35);
+}
+
+/* Button */
+.login-container button {
+  width: 100%;
+  max-width: 320px;
+  padding: 12px 14px;
+
+  border: none;
+  border-radius: 12px;
+
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+
+  background-color: #579be3;
+  color: white;
+
+  transition: 0.3s ease;
+  margin-top: 8px;
+}
+
+.login-container button:hover:not(:disabled) {
+  background-color: #2f3cd0;
+}
+
+.login-container button:disabled {
+  background-color: #9db9d8;
+  cursor: not-allowed;
+}

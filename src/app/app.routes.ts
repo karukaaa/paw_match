@@ -6,6 +6,7 @@ import { Login } from './components/login/login';
 import { Profile } from './components/profile/profile';
 import { AuthGuard } from '@angular/fire/auth-guard';
 import { authGuard } from './guards/auth.guard';
+import { NewsDetails } from './components/news-details/news-details';
 
 export const routes: Routes = [
   { path: '', component: Home, title: 'Home' },
@@ -17,5 +18,10 @@ export const routes: Routes = [
     component: Profile,
     title: 'Profile',
     canActivate: [authGuard],
+  },
+  {
+    path: 'news/:id',
+    component: NewsDetails,
+    title: 'News Details',
   },
 ];
