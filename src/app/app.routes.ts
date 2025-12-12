@@ -4,9 +4,9 @@ import { NewsList } from './components/news-list/news-list';
 import { Signup } from './components/signup/signup';
 import { Login } from './components/login/login';
 import { Profile } from './components/profile/profile';
-import { AuthGuard } from '@angular/fire/auth-guard';
 import { authGuard } from './guards/auth.guard';
 import { NewsDetails } from './components/news-details/news-details';
+import { Favorites } from './components/favorites/favorites';
 
 export const routes: Routes = [
   { path: '', component: Home, title: 'Home' },
@@ -24,4 +24,5 @@ export const routes: Routes = [
     component: NewsDetails,
     title: 'News Details',
   },
+  { path: 'favorites', component: Favorites, title: 'Favorites' },
 ];

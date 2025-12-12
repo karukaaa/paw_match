@@ -5,6 +5,10 @@
     News
   </a>
 
+  <a routerLink="/favorites" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    Favorites
+  </a>
+
   <span class="spacer"></span>
 
   @if (!user()) {

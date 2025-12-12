@@ -1,1 +1,15 @@
-<p>favorites works!</p>
+<section class="favorites-section">
+  <h2>Your Favorites</h2>
+
+  @if (loading()) {
+  <p>Loading favorites...</p>
+  } @else { @if (favorites().length === 0) {
+  <p>No favorites yet.</p>
+  } @else {
+  <div class="favorites-list">
+    @for (article of favorites(); track article._id) {
+    <app-news-card [article]="article"></app-news-card>
+    }
+  </div>
+  } }
+</section>

@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, doc, getDoc, updateDoc } from '@angular/fire/firestore';
+import { AuthService } from './auth-service';
 
 @Injectable({
   providedIn: 'root',
@@ -7,25 +8,32 @@ import { Firestore, doc, getDoc, updateDoc } from '@angular/fire/firestore';
 export class FavoritesService {
   private LOCAL_KEY = 'favorites';
 
-  constructor(private firestore: Firestore) {}
+  private serverFavorites: string[] = [];
 
-  // Read favorites from localStorage
+  constructor(private auth: AuthService, private firestore: Firestore) {
+    this.auth.authState$.subscribe((user) => {
+      if (user) this.loadServerFavorites(user.uid);
+    });
+  }
   getFavorites(): string[] {
     const raw = localStorage.getItem(this.LOCAL_KEY);
     return raw ? JSON.parse(raw) : [];
   }
 
-  // Save updated list
   private saveFavorites(list: string[]) {
     localStorage.setItem(this.LOCAL_KEY, JSON.stringify(list));
   }
 
-  // Check if ID is already favorited
   isFavorite(id: string): boolean {
+    const user = this.auth.currentUser;
+
+    if (user) {
+      return this.serverFavorites.includes(id);
+    }
+
     return this.getFavorites().includes(id);
   }
 
-  // Add favorite
   addFavorite(id: string) {
     const current = this.getFavorites();
     if (!current.includes(id)) {
@@ -33,15 +41,32 @@ export class FavoritesService {
     }
   }
 
-  // Remove favorite
   removeFavorite(id: string) {
     const updated = this.getFavorites().filter((x) => x !== id);
     this.saveFavorites(updated);
   }
 
-  // Toggle helper (optional)
-  toggleFavorite(id: string) {
-    this.isFavorite(id) ? this.removeFavorite(id) : this.addFavorite(id);
+  async toggleFavorite(id: string) {
+    const user = this.auth.currentUser;
+
+    if (user) {
+      if (this.serverFavorites.includes(id)) {
+        this.serverFavorites = this.serverFavorites.filter((f) => f !== id);
+      } else {
+        this.serverFavorites.push(id);
+      }
+
+      const ref = doc(this.firestore, `users/${user.uid}`);
+      await updateDoc(ref, { favorites: this.serverFavorites });
+      return;
+    }
+
+    const local = this.getFavorites();
+    if (local.includes(id)) {
+      this.saveFavorites(local.filter((x) => x !== id));
+    } else {
+      this.saveFavorites([...local, id]);
+    }
   }
 
   async mergeLocalWithServerFavorites(uid: string): Promise<string[] | null> {
@@ -49,7 +74,6 @@ export class FavoritesService {
 
     if (!localFavs.length) return null;
 
-    // Read server favorites
     const userRef = doc(this.firestore, `users/${uid}`);
     const snap = await getDoc(userRef);
 
@@ -58,15 +82,22 @@ export class FavoritesService {
       serverFavs = snap.data()['favorites'] || [];
     }
 
-    // Merge without duplicates
     const merged = Array.from(new Set([...serverFavs, ...localFavs]));
-
-    // Save merged list back to Firestore
     await updateDoc(userRef, { favorites: merged });
-
-    // Clear local favorites — they’re stored on the server now
     localStorage.removeItem('favorites');
 
-    return merged; // return for UI
+    return merged;
+  }
+
+  //Loading from Firestore Server
+  async loadServerFavorites(uid: string) {
+    const ref = doc(this.firestore, `users/${uid}`);
+    const snap = await getDoc(ref);
+
+    this.serverFavorites = snap.exists() ? snap.data()['favorites'] || [] : [];
+  }
+
+  getFavoritesFromServer(): string[] {
+    return this.serverFavorites;
   }
 }

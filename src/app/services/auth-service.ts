@@ -18,6 +18,10 @@ export class AuthService {
   authState$: Observable<any> = user(this.auth);
   currentUser$ = authState(this.auth);
 
+  get currentUser() {
+    return this.auth.currentUser;
+  }
+
   signUp(email: string, password: string): Observable<any> {
     return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
       catchError((err) => {
