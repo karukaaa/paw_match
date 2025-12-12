@@ -7,7 +7,7 @@ import {
   user,
   authState,
 } from '@angular/fire/auth';
-import { catchError, Observable, throwError, from } from 'rxjs';
+import { catchError, Observable, throwError, from, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -40,9 +40,11 @@ export class AuthService {
     );
   }
 
-  isAuthenticated(): boolean {
-    return !!this.auth.currentUser;
-  }
+  // isAuthenticated(): boolean {
+  //   return !!this.auth.currentUser;
+  // }
+
+  isLoggedIn$ = this.currentUser$.pipe(map((user) => !!user));
 
   private handleError(err: any): string {
     const code = err.code;

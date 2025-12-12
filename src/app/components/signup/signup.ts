@@ -3,6 +3,8 @@ import { Component, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
+import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 
 @Component({
   selector: 'app-signup',
@@ -19,41 +21,30 @@ export class Signup {
   loading = signal(false);
   error = signal<string | null>(null);
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router, private firestore: Firestore) {}
 
-  submitForm() {
+  async submitForm() {
     this.error.set(null);
-
-    const emailError = this.validateEmail(this.email());
-    if (emailError) {
-      this.error.set(emailError);
-      return;
-    }
-
-    const pwError = this.validatePassword(this.password());
-    if (pwError) {
-      this.error.set(pwError);
-      return;
-    }
-
-    if (this.password() !== this.confirmPassword()) {
-      this.error.set("Passwords don't match.");
-      return;
-    }
-
     this.loading.set(true);
 
-    this.auth.signUp(this.email(), this.password()).subscribe({
-      next: (cred) => {
-        console.log('Signed up:', cred.user);
-        this.loading.set(false);
-        this.router.navigate(['/profile']);
-      },
-      error: (errMsg) => {
-        this.loading.set(false);
-        this.error.set(errMsg);
-      },
-    });
+    try {
+      const cred = await firstValueFrom(this.auth.signUp(this.email(), this.password()));
+
+      const uid = cred.user.uid;
+
+      await setDoc(doc(this.firestore, `users/${uid}`), {
+        email: this.email(),
+        createdAt: new Date().toISOString(),
+        favorites: [],
+      });
+
+      this.router.navigate(['/profile']);
+    } catch (error: any) {
+      console.error(error);
+      this.error.set(error.message || 'Signup failed');
+    } finally {
+      this.loading.set(false);
+    }
   }
 
   validateEmail(email: string): string | null {

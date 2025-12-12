@@ -3,6 +3,8 @@ import { AuthService } from '../../services/auth-service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FavoritesService } from '../../services/favorites-service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -16,14 +18,22 @@ export class Login {
   loading = signal(false);
   error = signal<string | null>(null);
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router, private fav: FavoritesService) {}
 
   submitForm() {
     this.error.set(null);
     this.loading.set(true);
 
     this.auth.login(this.email(), this.password()).subscribe({
-      next: (cred) => {
+      next: async (cred) => {
+        const uid = cred.user.uid;
+
+        // Merge local favorites
+        const merged = await this.fav.mergeLocalWithServerFavorites(uid);
+        if (merged) {
+          alert('Your local favorites were merged with your account.');
+        }
+
         console.log('Logged in:', cred.user);
         this.loading.set(false);
         this.router.navigate(['/profile']);
