@@ -18,6 +18,7 @@ import { NewsService } from '../../services/news-service';
 import { NewsArticle, NYTResponse } from '../../interfaces/newsInterfaces';
 import { sign } from 'crypto';
 import { NewsCard } from '../news-card/news-card';
+import { FavoritesService } from '../../services/favorites-service';
 
 @Component({
   selector: 'app-news-list',
@@ -39,7 +40,16 @@ export class NewsList implements OnInit {
 
   search$ = new Subject<string>();
 
-  constructor(private route: ActivatedRoute, private router: Router, private api: NewsService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private api: NewsService,
+    private fav: FavoritesService
+  ) {
+    this.fav.favoritesChanged.subscribe(() => {
+      this.news.update((list) => [...list]);
+    });
+  }
 
   ngOnInit(): void {
     this.route.queryParamMap

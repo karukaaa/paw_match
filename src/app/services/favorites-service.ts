@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, doc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { AuthService } from './auth-service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,7 @@ export class FavoritesService {
   private LOCAL_KEY = 'favorites';
 
   private serverFavorites: string[] = [];
+  favoritesChanged = new Subject<void>();
 
   constructor(private auth: AuthService, private firestore: Firestore) {
     this.auth.authState$.subscribe((user) => {
@@ -58,15 +60,20 @@ export class FavoritesService {
 
       const ref = doc(this.firestore, `users/${user.uid}`);
       await updateDoc(ref, { favorites: this.serverFavorites });
+
+      this.favoritesChanged.next(); // <-- notify UI
       return;
     }
 
-    const local = this.getFavorites();
+    let local = this.getFavorites();
     if (local.includes(id)) {
-      this.saveFavorites(local.filter((x) => x !== id));
+      local = local.filter((x) => x !== id);
     } else {
-      this.saveFavorites([...local, id]);
+      local = [...local, id];
     }
+
+    this.saveFavorites(local);
+    this.favoritesChanged.next();
   }
 
   async mergeLocalWithServerFavorites(uid: string): Promise<string[] | null> {
@@ -95,6 +102,8 @@ export class FavoritesService {
     const snap = await getDoc(ref);
 
     this.serverFavorites = snap.exists() ? snap.data()['favorites'] || [] : [];
+
+    this.favoritesChanged.next(); // <-- notify UI
   }
 
   getFavoritesFromServer(): string[] {
