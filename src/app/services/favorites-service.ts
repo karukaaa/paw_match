@@ -61,7 +61,7 @@ export class FavoritesService {
       const ref = doc(this.firestore, `users/${user.uid}`);
       await updateDoc(ref, { favorites: this.serverFavorites });
 
-      this.favoritesChanged.next(); // <-- notify UI
+      this.favoritesChanged.next();
       return;
     }
 
@@ -90,8 +90,12 @@ export class FavoritesService {
     }
 
     const merged = Array.from(new Set([...serverFavs, ...localFavs]));
+
     await updateDoc(userRef, { favorites: merged });
     localStorage.removeItem('favorites');
+
+    this.serverFavorites = merged;
+    this.favoritesChanged.next();
 
     return merged;
   }

@@ -33,6 +33,7 @@
     "@angular/router": "^20.3.0",
     "@angular/service-worker": "^20.3.0",
     "@angular/ssr": "^20.3.2",
+    "@ngx-pwa/offline": "^13.0.3",
     "express": "^5.1.0",
     "firebase": "^11.10.0",
     "rxjs": "~7.8.0",

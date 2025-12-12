@@ -3,10 +3,11 @@ import { RouterOutlet } from '@angular/router';
 import { Navbar } from './components/navbar/navbar';
 import { NetworkService } from './services/network-service';
 import { CommonModule } from '@angular/common';
+import { OfflineBanner } from './components/offline-banner/offline-banner';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, CommonModule],
+  imports: [RouterOutlet, Navbar, CommonModule, OfflineBanner],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

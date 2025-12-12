@@ -1,22 +1,29 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, fromEvent, merge } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NetworkService {
-  isOffline = signal(!navigator.onLine);
+  private onlineStatus = new BehaviorSubject<boolean>(navigator.onLine);
+
+  onlineStatus$ = this.onlineStatus.asObservable();
 
   constructor() {
-    this.sync();
-
-    window.addEventListener('online', () => this.sync());
-    window.addEventListener('offline', () => this.sync());
-
-    setInterval(() => this.sync(), 1500);
+    this.monitor();
   }
 
-  private sync() {
-    const offline = !navigator.onLine;
-    this.isOffline.set(offline);
+  private monitor() {
+    merge(fromEvent(window, 'online'), fromEvent(window, 'offline'))
+      .pipe(
+        map(() => navigator.onLine),
+        startWith(navigator.onLine)
+      )
+      .subscribe((isOnline) => this.onlineStatus.next(isOnline));
+  }
+
+  get isOnline() {
+    return this.onlineStatus.value;
   }
 }
