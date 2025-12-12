@@ -7,32 +7,38 @@ import { AuthService } from './auth-service';
 export class FavoritesService {
   private LOCAL_KEY = 'favorites';
 
-  constructor(private auth: AuthService) {}
-
-  // --- LOCAL STORAGE MODE ---
-  getLocalFavorites(): string[] {
+  // Read favorites from localStorage
+  getFavorites(): string[] {
     const raw = localStorage.getItem(this.LOCAL_KEY);
     return raw ? JSON.parse(raw) : [];
   }
 
-  saveLocalFavorites(list: string[]) {
+  // Save updated list
+  private saveFavorites(list: string[]) {
     localStorage.setItem(this.LOCAL_KEY, JSON.stringify(list));
   }
 
-  addLocalFavorite(id: string) {
-    const list = this.getLocalFavorites();
-    if (!list.includes(id)) {
-      list.push(id);
-      this.saveLocalFavorites(list);
+  // Check if ID is already favorited
+  isFavorite(id: string): boolean {
+    return this.getFavorites().includes(id);
+  }
+
+  // Add favorite
+  addFavorite(id: string) {
+    const current = this.getFavorites();
+    if (!current.includes(id)) {
+      this.saveFavorites([...current, id]);
     }
   }
 
-  removeLocalFavorite(id: string) {
-    const list = this.getLocalFavorites().filter((x) => x !== id);
-    this.saveLocalFavorites(list);
+  // Remove favorite
+  removeFavorite(id: string) {
+    const updated = this.getFavorites().filter((x) => x !== id);
+    this.saveFavorites(updated);
   }
 
-  isFavoriteLocal(id: string): boolean {
-    return this.getLocalFavorites().includes(id);
+  // Toggle helper (optional)
+  toggleFavorite(id: string) {
+    this.isFavorite(id) ? this.removeFavorite(id) : this.addFavorite(id);
   }
 }

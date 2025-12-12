@@ -18,4 +18,8 @@
   </div>
 
   <button class="learn-btn" (click)="openDetails()">Learn more</button>
+
+  <button class="fav-btn" (click)="toggleFavorite()">
+    {{ isFavorite() ? '★ Bookmarked' : '☆ Add to Favorites' }}
+  </button>
 </article>
