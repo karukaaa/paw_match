@@ -1,52 +1,92 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
-import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
-  imports: [CommonModule, FormsModule],
   standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './signup.html',
   styleUrl: './signup.css',
 })
 export class Signup {
-  email = signal('');
-  password = signal('');
-  confirmPassword = signal('');
+  email = '';
+  password = '';
+  confirmPassword = '';
 
-  loading = signal(false);
-  error = signal<string | null>(null);
+  loading = false;
+  error: string | null = null;
 
   constructor(private auth: AuthService, private router: Router, private firestore: Firestore) {}
 
+  // ---------------------------
+  // 1) VALIDATION ONLY (sync)
+  // ---------------------------
+  validateForm(): string | null {
+    const emailError = this.validateEmail(this.email);
+    if (emailError) return emailError;
+
+    const pwError = this.validatePassword(this.password);
+    if (pwError) return pwError;
+
+    if (this.password !== this.confirmPassword) {
+      return "Passwords don't match.";
+    }
+
+    return null; // all good
+  }
+
+  // ---------------------------
+  // 2) FIREBASE + FIRESTORE (async)
+  // ---------------------------
+  private async performSignup() {
+    const cred = await firstValueFrom(this.auth.signUp(this.email, this.password));
+
+    const uid = cred.user.uid;
+
+    await setDoc(doc(this.firestore, `users/${uid}`), {
+      email: this.email,
+      createdAt: new Date().toISOString(),
+      favorites: [],
+    });
+
+    return cred;
+  }
+
+  // ---------------------------
+  // 3) MAIN SUBMIT HANDLER
+  // ---------------------------
   async submitForm() {
-    this.error.set(null);
-    this.loading.set(true);
+    this.error = null;
+
+    // RUN VALIDATION FIRST (synchronous)
+    const validationError = this.validateForm();
+    if (validationError) {
+      this.error = validationError;
+      return;
+    }
+
+    // THEN RUN ASYNC SIGNUP
+    this.loading = true;
 
     try {
-      const cred = await firstValueFrom(this.auth.signUp(this.email(), this.password()));
-
-      const uid = cred.user.uid;
-
-      await setDoc(doc(this.firestore, `users/${uid}`), {
-        email: this.email(),
-        createdAt: new Date().toISOString(),
-        favorites: [],
-      });
-
+      await this.performSignup();
       this.router.navigate(['/profile']);
-    } catch (error: any) {
-      console.error(error);
-      this.error.set(error.message || 'Signup failed');
+    } catch (err: any) {
+      console.error(err);
+      this.error = err?.message || 'Signup failed';
     } finally {
-      this.loading.set(false);
+      this.loading = false;
     }
   }
 
+  // ---------------------------
+  // Helper validation functions
+  // ---------------------------
   validateEmail(email: string): string | null {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email) ? null : 'Invalid email format.';
