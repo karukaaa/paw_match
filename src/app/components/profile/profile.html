@@ -3,15 +3,25 @@
 
   @if (user$ | async; as user) {
   <div class="profile-card">
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>User ID (UID):</strong> {{ user.uid }}</p>
+    <div class="info-block">
+      <label>Email</label>
+      <p>{{ user.email }}</p>
+    </div>
+
+    <div class="info-block">
+      <label>User ID (UID)</label>
+      <p>{{ user.uid }}</p>
+    </div>
 
     @if (user.photoURL) {
     <img [src]="user.photoURL" alt="Profile Photo" class="profile-photo" />
-    } @if (user.displayName) {
-    <p><strong>Name:</strong> {{ user.displayName }}</p>
     }
+
+    <p class="note">You can view your favorite articles any time!</p>
+
+    <button class="btn primary" (click)="goToFavorites()">View Favorites</button>
   </div>
+
   } @else {
   <p>You are not logged in.</p>
   }

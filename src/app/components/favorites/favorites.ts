@@ -6,6 +6,7 @@ import { NewsService } from '../../services/news-service';
 import { NewsCard } from '../news-card/news-card';
 import { NewsArticle } from '../../interfaces/newsInterfaces';
 import { firstValueFrom } from 'rxjs';
+import { FavoritesService } from '../../services/favorites-service';
 
 @Component({
   selector: 'app-favorites',
@@ -22,8 +23,12 @@ export class Favorites {
   favorites = signal<NewsArticle[]>([]);
   user$ = this.auth.authState$;
 
-  constructor() {
+  constructor(private fav: FavoritesService) {
     this.user$.subscribe((user) => {
+      this.loadFavorites(user);
+    });
+    this.fav.favoritesChanged.subscribe(() => {
+      const user = this.auth.currentUser;
       this.loadFavorites(user);
     });
   }
