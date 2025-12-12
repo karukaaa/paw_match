@@ -1,0 +1,17 @@
+.offline-banner {
+  display: none;
+  background: #ffcccc;
+  color: #7a0000;
+  padding: 12px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 3000;
+  border-bottom: 2px solid #cc0000;
+}
+
+.offline-banner.show {
+  display: block;
+}

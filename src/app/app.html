@@ -1,2 +1,7 @@
 <app-navbar></app-navbar>
+
+<div class="offline-banner" *ngIf="network.isOffline() as offline">
+  <ng-container *ngIf="offline"> You are offline. Showing cached content. </ng-container>
+</div>
+
 <router-outlet></router-outlet>
